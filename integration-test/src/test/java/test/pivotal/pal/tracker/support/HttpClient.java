@@ -5,12 +5,19 @@ import okhttp3.*;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class HttpClient {
 
     private static final MediaType JSON = MediaType.parse("application/json");
 
     private final OkHttpClient okHttp = new OkHttpClient();
+
+    OkHttpClient clientWithLotsOfPatience = okHttp.newBuilder()
+            .connectTimeout(50, TimeUnit.SECONDS)
+            .readTimeout(50, TimeUnit.SECONDS)
+            .build();
+
     private final ObjectMapper objectMapper = new ObjectMapper();
 
 
@@ -51,7 +58,7 @@ public class HttpClient {
         try {
             Request request = requestBuilder.build();
 
-            okhttp3.Response response = okHttp.newCall(request).execute();
+            okhttp3.Response response = clientWithLotsOfPatience.newCall(request).execute();
             ResponseBody body = response.body();
 
             if (body == null) {

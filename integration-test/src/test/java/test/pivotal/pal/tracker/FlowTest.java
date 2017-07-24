@@ -109,12 +109,12 @@ public class FlowTest {
         assertThat(response.body).isEqualTo("Noop!");
 
         response = httpClient.post(
-            allocationsServerUrl("/allocations"), jsonMapBuilder()
-                .put("projectId", createdProjectId)
-                .put("userId", createdUserId)
-                .put("firstDay", "2015-05-17")
-                .put("lastDay", "2015-05-26")
-                .build()
+                allocationsServerUrl("/allocations"), jsonMapBuilder()
+                        .put("projectId", createdProjectId)
+                        .put("userId", createdUserId)
+                        .put("firstDay", "2015-05-17")
+                        .put("lastDay", "2015-05-26")
+                        .build()
         );
 
         long createdAllocationId = findResponseId(response);
